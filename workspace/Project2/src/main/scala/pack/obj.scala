@@ -7,6 +7,7 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.expressions.Window
 import scala.io.Source
+import com.databricks.spark.avro._
 
 object obj {
 
@@ -19,11 +20,11 @@ object obj {
 					val spark = SparkSession.builder().getOrCreate()
 					import spark.implicits._
 
-					val avro1 = spark.read.format("com.databricks.spark.avro")
-					.load("file:///C://Project2/projectsample.avro")
-					
+
+					val avro1 = spark.read.format("com.databricks.spark.avro").load("file:///home/cloudera/projectsample.avro")
+
 					val html = Source.fromURL("https://randomuser.me/api/0.8/?results=10").mkString
-					
+
 					val urlrdd = sc.parallelize(List(html))
 
 					val df = spark.read.json(urlrdd)
@@ -53,9 +54,10 @@ object obj {
 							"results.user.username"
 							)
 
-					
+
+
 					flattendata.write.format("parquet").mode("overwrite").option("header", "true")
-					.save("file:///c://Project2/tempdest")
+					.save("hdfs:/user/cloudera/tempdest")
 
 
 
