@@ -7,6 +7,7 @@ import org.apache.spark.sql._
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.expressions.Window
 import scala.io.Source
+import com.databricks.spark.avro._
 
 object obj {
 
