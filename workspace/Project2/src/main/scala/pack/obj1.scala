@@ -19,11 +19,10 @@ object obj1 {
 					val spark = SparkSession.builder().getOrCreate()
 					import spark.implicits._
 
-					val avro1 = spark.read.format("com.databricks.spark.avro")
-					.load("file:///C://Project2/projectsample.avro")
+					val avro1 = spark.read.format("com.databricks.spark.avro").load("file:///home/cloudera/projectsample.avro")
 
-					val parquet1 = spark.read.format("parquet")
-					.load("file:///C://Project2/tempdest")
+
+					val parquet1 = spark.read.format("parquet").load("hdfs:/user/cloudera/tempdest")
 
 					val remnum = parquet1.withColumn("username",regexp_replace(col("username"),"[0-9]",""))
 
@@ -42,12 +41,11 @@ object obj1 {
 					val AvailableCustomer_currenttime = availableCustomer.withColumn("Current_Time",current_date)
 					
 					notAvailableCustomer_currenttime.write.format("parquet").mode("overwrite").partitionBy("Current_Time")
-					.save("file:///C://project2/dest/NotAvailableCustomer_currenttime")
+					.save("hdfs:/user/cloudera/finaldest/NotAvailableCustomer_currenttime")
 
 					AvailableCustomer_currenttime.write.format("parquet").mode("overwrite").partitionBy("Current_Time")
-					.save("file:///C://project2/dest/AvailableCustomer_currenttime")
+					.save("hdfs:/user/cloudera/finaldest/AvailableCustomer_currenttime")
 
-					println("Done")
 	}
 
 }
