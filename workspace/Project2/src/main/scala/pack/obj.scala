@@ -58,7 +58,8 @@ object obj {
 
 					flattendata.write.format("parquet").mode("overwrite").option("header", "true")
 					.save("hdfs:/user/cloudera/tempdest")
-
+					
+					println("Write completed")
 
 
 
